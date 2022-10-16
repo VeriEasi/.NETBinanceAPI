@@ -28,87 +28,13 @@ namespace Program4Test
             bool conn = await Task.Run(() => bf.Connect());
             Console.WriteLine(conn);
 
-            
-
-            while (true)
-            {
-                System.Threading.Thread.Sleep(1000);
-                JObject res = await Task.Run(() => bf.GetAccountInfo());
-
-                foreach (JObject obj in res["Data"]["Assets"])
-                {
-                    if ((string)obj["Asset"] == "USDT")
-                    {
-                        Console.WriteLine(obj["AvailableBalance"]);
-                        break;
-                    }
-                }
-            }
-            
-
-            
-
-
-            // 
-            //var tokenSource1 = new CancellationTokenSource();
-            //var tokenSource2 = new CancellationTokenSource();
-            //Task t1 = Task.Run(() => bf.SubscribeMarketPrice("BTCUSDT", ONNewPrice, tokenSource1.Token));
-            //System.Threading.Thread.Sleep(10000);
-            //Task t2 = Task.Run(() => bf.SubscribeMarketPrice("ETHUSDT", ONNewPrice, tokenSource2.Token));
-            //System.Threading.Thread.Sleep(10000);
-            //tokenSource2.Cancel();
-
-            //Console.WriteLine("Canceled: {0} . Finished: {1} . Error: {2}",
-            //           t2.IsCanceled, t2.IsCompleted, t2.IsFaulted);
-            // Subscribe
-            //await Task.Run(() => bf.SubscribeAccountUpdates(OnLeverageUpdate,
-            //    OnMarginUpdate,
-            //    OnAccountUpdate,
-            //    OnOrderUpdate,
-            //    OnListenKeyExpired));
-
-            // TP Request
-            //var result = await Task.Run(() => bf.PlaceOrder(Symbol: "BTCUSDT",
-            //                Side: Binance.Net.Enums.OrderSide.Sell,
-            //                Type: Binance.Net.Enums.FuturesOrderType.TakeProfitMarket,
-            //                Quantity: 0,
-            //                PositionSide: Binance.Net.Enums.PositionSide.Both,
-            //                TimeInForce: Binance.Net.Enums.TimeInForce.GoodTillExpiredOrCanceled,
-            //                NewClientOrderId: "aDSHGDAJDLNJSBFSMFNSHB",
-            //                StopPrice: (decimal)21560.0,
-            //                ActivationPrice: 0,
-            //                CallbackRate: 0,
-            //                WorkingType: 0,
-            //                ClosePosition: true));
-            //Console.WriteLine(result);
-
-            //// SL Request
-            //var result1 = await Task.Run(() => bf.PlaceOrder(Symbol: "BTCUSDT",
-            //                Side: Binance.Net.Enums.OrderSide.Sell,
-            //                Type: Binance.Net.Enums.FuturesOrderType.StopMarket,
-            //                Quantity: 0,
-            //                PositionSide: Binance.Net.Enums.PositionSide.Both,
-            //                TimeInForce: Binance.Net.Enums.TimeInForce.GoodTillExpiredOrCanceled,
-            //                NewClientOrderId: "aDSHGDAJDLNJSBFSMFNSHC",
-            //                StopPrice: (decimal)20000.0,
-            //                ActivationPrice: 0,
-            //                CallbackRate: 0,
-            //                WorkingType: 0,
-            //                ClosePosition: true));
-            //Console.WriteLine(result1);
-
-            // Change Leverage
-            //JObject cl = await Task.Run(() => bf.ChangeLeverage("BTCUSDT", 15));
-            //Console.WriteLine(cl.ToString());
-
-            // 
-            //JObject cpm = await bf.ChangePositionMargin("BTCUSDT");
-            //Console.WriteLine(cpm.ToString());
+            JObject bal = await Task.Run(() => bf.GetBalances());
+            Console.WriteLine(bal);
 
             ExitEvent.WaitOne();
         }
 
-        private static void ONNewPrice(DataEvent<BinanceFuturesUsdtStreamMarkPrice> obj)
+        private static void OnNewPrice(DataEvent<BinanceFuturesUsdtStreamMarkPrice> obj)
         {
             Console.WriteLine(JsonSerializer.Serialize(obj.Data));
         }

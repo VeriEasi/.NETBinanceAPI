@@ -47,11 +47,7 @@
           "dependencies": {
             "Binance.Net": {
               "target": "Package",
-              "version": "[8.1.5, )"
-            },
-            "log4net": {
-              "target": "Package",
-              "version": "[2.0.14, )"
+              "version": "[8.2.0, )"
             }
           },
           "imports": [

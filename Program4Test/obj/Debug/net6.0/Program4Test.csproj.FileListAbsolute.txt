@@ -5,14 +5,9 @@ D:\Ali\Documents\All Projects\Visual Studio 2019\Repos\VeriEasi\.NETBinanceAPI\P
 D:\Ali\Documents\All Projects\Visual Studio 2019\Repos\VeriEasi\.NETBinanceAPI\Program4Test\bin\Debug\net6.0\Program4Test.pdb
 D:\Ali\Documents\All Projects\Visual Studio 2019\Repos\VeriEasi\.NETBinanceAPI\Program4Test\bin\Debug\net6.0\Binance.Net.dll
 D:\Ali\Documents\All Projects\Visual Studio 2019\Repos\VeriEasi\.NETBinanceAPI\Program4Test\bin\Debug\net6.0\CryptoExchange.Net.dll
-D:\Ali\Documents\All Projects\Visual Studio 2019\Repos\VeriEasi\.NETBinanceAPI\Program4Test\bin\Debug\net6.0\log4net.dll
 D:\Ali\Documents\All Projects\Visual Studio 2019\Repos\VeriEasi\.NETBinanceAPI\Program4Test\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 D:\Ali\Documents\All Projects\Visual Studio 2019\Repos\VeriEasi\.NETBinanceAPI\Program4Test\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
 D:\Ali\Documents\All Projects\Visual Studio 2019\Repos\VeriEasi\.NETBinanceAPI\Program4Test\bin\Debug\net6.0\Newtonsoft.Json.dll
-D:\Ali\Documents\All Projects\Visual Studio 2019\Repos\VeriEasi\.NETBinanceAPI\Program4Test\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
-D:\Ali\Documents\All Projects\Visual Studio 2019\Repos\VeriEasi\.NETBinanceAPI\Program4Test\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
-D:\Ali\Documents\All Projects\Visual Studio 2019\Repos\VeriEasi\.NETBinanceAPI\Program4Test\bin\Debug\net6.0\System.Security.Permissions.dll
-D:\Ali\Documents\All Projects\Visual Studio 2019\Repos\VeriEasi\.NETBinanceAPI\Program4Test\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\Ali\Documents\All Projects\Visual Studio 2019\Repos\VeriEasi\.NETBinanceAPI\Program4Test\bin\Debug\net6.0\BinanceAPI.dll
 D:\Ali\Documents\All Projects\Visual Studio 2019\Repos\VeriEasi\.NETBinanceAPI\Program4Test\bin\Debug\net6.0\BinanceAPI.pdb
 D:\Ali\Documents\All Projects\Visual Studio 2019\Repos\VeriEasi\.NETBinanceAPI\Program4Test\obj\Debug\net6.0\Program4Test.csproj.AssemblyReference.cache

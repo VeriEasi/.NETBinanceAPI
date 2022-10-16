@@ -46,7 +46,7 @@ namespace BinanceAPI
                 ApiCredentials = new ApiCredentials(APIKey, APISecret),
                 UsdFuturesApiOptions = new BinanceApiClientOptions
                 {
-                    BaseAddress = BinanceApiAddresses.Default.UsdFuturesRestClientAddress,
+                    BaseAddress = BinanceApiAddresses.TestNet.UsdFuturesRestClientAddress,
                 }
             });
 
@@ -55,7 +55,7 @@ namespace BinanceAPI
                 ApiCredentials = new ApiCredentials(APIKey, APISecret),
                 UsdFuturesStreamsOptions = new BinanceApiClientOptions
                 {
-                    BaseAddress = BinanceApiAddresses.Default.UsdFuturesSocketClientAddress,
+                    BaseAddress = BinanceApiAddresses.TestNet.UsdFuturesSocketClientAddress,
                 }
             });
 

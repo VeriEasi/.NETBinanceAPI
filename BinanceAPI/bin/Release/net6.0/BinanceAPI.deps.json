@@ -8,25 +8,25 @@
     ".NETCoreApp,Version=v6.0": {
       "BinanceAPI/1.0.0": {
         "dependencies": {
-          "Binance.Net": "8.1.5",
+          "Binance.Net": "8.2.0",
           "log4net": "2.0.14"
         },
         "runtime": {
           "BinanceAPI.dll": {}
         }
       },
-      "Binance.Net/8.1.5": {
+      "Binance.Net/8.2.0": {
         "dependencies": {
-          "CryptoExchange.Net": "5.2.0"
+          "CryptoExchange.Net": "5.2.2"
         },
         "runtime": {
           "lib/netstandard2.1/Binance.Net.dll": {
-            "assemblyVersion": "8.1.5.0",
-            "fileVersion": "8.1.5.0"
+            "assemblyVersion": "8.2.0.0",
+            "fileVersion": "8.2.0.0"
           }
         }
       },
-      "CryptoExchange.Net/5.2.0": {
+      "CryptoExchange.Net/5.2.2": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "3.1.0",
           "Microsoft.Extensions.Logging.Abstractions": "3.1.0",
@@ -34,8 +34,8 @@
         },
         "runtime": {
           "lib/netstandard2.1/CryptoExchange.Net.dll": {
-            "assemblyVersion": "5.2.0.0",
-            "fileVersion": "5.2.0.0"
+            "assemblyVersion": "5.2.2.0",
+            "fileVersion": "5.2.2.0"
           }
         }
       },
@@ -133,19 +133,19 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Binance.Net/8.1.5": {
+    "Binance.Net/8.2.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ufps2yfkIIhgX5KljgSbSZKZyQ/FX3+4pRLWpzdpX4MliqNJPr2JZqecD1Gvv6WHE9J7ExNk4rmvaFNjTZKW+Q==",
-      "path": "binance.net/8.1.5",
-      "hashPath": "binance.net.8.1.5.nupkg.sha512"
+      "sha512": "sha512-Blte2KTPS3SjoLS23d0FTXOn86GVRon1Ycb/XVn8WtLAM3x8eKxziltxy2Fg6IYtUU89xvt1IDyP+vbbT07CNw==",
+      "path": "binance.net/8.2.0",
+      "hashPath": "binance.net.8.2.0.nupkg.sha512"
     },
-    "CryptoExchange.Net/5.2.0": {
+    "CryptoExchange.Net/5.2.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-vz9RV9enKWQyfKgqHpZR5Rt5YP6W7KWx2I9s1ON3muC8gc46pFqxADb3bKOdWPXfSQtj+OVEXjk1sPsXWBRHqA==",
-      "path": "cryptoexchange.net/5.2.0",
-      "hashPath": "cryptoexchange.net.5.2.0.nupkg.sha512"
+      "sha512": "sha512-X7s1a75oLoQxgjt3vYCydvwwv5G9MIwq2FTtS/+eFfGZArjBul6t56wEtIBAnS+QIh0bsXSoZ7MGVYWHQq/0dw==",
+      "path": "cryptoexchange.net/5.2.2",
+      "hashPath": "cryptoexchange.net.5.2.2.nupkg.sha512"
     },
     "log4net/2.0.14": {
       "type": "package",
