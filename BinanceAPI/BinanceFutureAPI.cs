@@ -4,10 +4,10 @@ using Binance.Net.Objects;
 using Binance.Net.Objects.Models.Futures.Socket;
 using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Sockets;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
@@ -46,7 +46,7 @@ namespace BinanceAPI
                 ApiCredentials = new ApiCredentials(APIKey, APISecret),
                 UsdFuturesApiOptions = new BinanceApiClientOptions
                 {
-                    BaseAddress = BinanceApiAddresses.TestNet.UsdFuturesRestClientAddress,
+                    BaseAddress = BinanceApiAddresses.Default.UsdFuturesRestClientAddress,
                 }
             });
 
@@ -55,7 +55,7 @@ namespace BinanceAPI
                 ApiCredentials = new ApiCredentials(APIKey, APISecret),
                 UsdFuturesStreamsOptions = new BinanceApiClientOptions
                 {
-                    BaseAddress = BinanceApiAddresses.TestNet.UsdFuturesSocketClientAddress,
+                    BaseAddress = BinanceApiAddresses.Default.UsdFuturesSocketClientAddress,
                 }
             });
 
@@ -121,14 +121,14 @@ namespace BinanceAPI
         {
             CancellationTokenSource CTS = new(5000);
             var result = await Client.UsdFuturesApi.Account.GetAccountInfoAsync(ct: CTS.Token);
-            return JObject.Parse(JsonSerializer.Serialize(result));
+            return JObject.Parse(JsonConvert.SerializeObject(result));
         }
 
         public async Task<JObject> GetBalances()
         {
             CancellationTokenSource CTS = new(5000);
             var result = await Client.UsdFuturesApi.Account.GetBalancesAsync(ct: CTS.Token);
-            return JObject.Parse(JsonSerializer.Serialize(result));
+            return JObject.Parse(JsonConvert.SerializeObject(result));
         }
 
         public async Task<bool> SubscribeAccountUpdates(Action<DataEvent<BinanceFuturesStreamConfigUpdate>> OnLeverageUpdate,
@@ -181,14 +181,14 @@ namespace BinanceAPI
         {
             CancellationTokenSource CTS = new(5000);
             var result = await Client.UsdFuturesApi.Account.ChangeInitialLeverageAsync(Symbol, Leverage, ct: CTS.Token);
-            return JObject.Parse(JsonSerializer.Serialize(result));
+            return JObject.Parse(JsonConvert.SerializeObject(result));
         }
 
         public async Task<JObject> ChangeMarginType(string Symbol, FuturesMarginType Margin)
         {
             CancellationTokenSource CTS = new(5000);
             var result = await Client.UsdFuturesApi.Account.ChangeMarginTypeAsync(Symbol, Margin, ct: CTS.Token);
-            return JObject.Parse(JsonSerializer.Serialize(result));
+            return JObject.Parse(JsonConvert.SerializeObject(result));
         }
 
         public async Task<JObject> PlaceOrder(string Symbol, OrderSide Side, FuturesOrderType Type,
@@ -202,14 +202,14 @@ namespace BinanceAPI
             var result = await Client.UsdFuturesApi.Trading.PlaceOrderAsync(Symbol, Side, Type, Quantity, Price, PositionSide,
                 TimeInForce, ReduceOnly, NewClientOrderId, StopPrice, ActivationPrice, CallbackRate,
                 WorkingType, ClosePosition, OrderResponseType, PriceProtect, ReceiveWindow, CTS.Token);
-            return JObject.Parse(JsonSerializer.Serialize(result));
+            return JObject.Parse(JsonConvert.SerializeObject(result));
         }
 
         public async Task<JObject> CancelOrder(string Symbol, long? OrderId = null, string? ClientOrderId = null)
         {
             CancellationTokenSource CTS = new(5000);
             var result = await Client.UsdFuturesApi.Trading.CancelOrderAsync(Symbol, OrderId, ClientOrderId, ct: CTS.Token);
-            return JObject.Parse(JsonSerializer.Serialize(result));
+            return JObject.Parse(JsonConvert.SerializeObject(result));
         }
     }
 }
