@@ -1,8 +1,9 @@
 ﻿using Binance.Net.Objects.Models.Futures.Socket;
 using CryptoExchange.Net.Sockets;
-using Newtonsoft.Json;
 using System;
 using System.Runtime.Loader;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,37 +26,57 @@ namespace Program4Test
 
             // Connect
             bool conn = await Task.Run(() => bf.Connect());
-            Console.WriteLine(conn);
+            Console.WriteLine("Connection: " + conn);
 
-            bool bal = await Task.Run(() => bf.SubscribeAccountUpdates(OnLeverageUpdate,
+            // Balance
+            JsonObject balance = await Task.Run(() => bf.GetBalances());
+            Console.WriteLine("Balance: " + JsonSerializer.Serialize(balance));
+
+            // Subscribe
+            bool sub = await Task.Run(() => bf.SubscribeAccountUpdates(OnLeverageUpdate,
                 OnMarginUpdate,
                 OnAccountUpdate, OnOrderUpdate, OnListenKeyExpired));
+            Console.WriteLine("Subscribe: " + sub);
+
+            //await Task.Run(() => bf.PlaceOrder(
+            //            Symbol: "NEARUSDT",
+            //            Side: Binance.Net.Enums.OrderSide.Sell,
+            //            Type: Binance.Net.Enums.FuturesOrderType.Market,
+            //            Quantity: (decimal)560,
+            //            PositionSide: Binance.Net.Enums.PositionSide.Both,
+            //            ReduceOnly: true,
+            //            NewClientOrderId: "ios_djhfdfgsfaghjdk",
+            //            ActivationPrice: 0,
+            //            CallbackRate: 0,
+            //            WorkingType: Binance.Net.Enums.WorkingType.Mark
+            //            ));
+
             ExitEvent.WaitOne();
         }
 
         private static void OnLeverageUpdate(DataEvent<BinanceFuturesStreamConfigUpdate> obj)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(obj.Data));
+            Console.WriteLine(JsonSerializer.Serialize(obj.Data));
         }
 
         private static void OnMarginUpdate(DataEvent<BinanceFuturesStreamMarginUpdate> obj)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(obj.Data));
+            Console.WriteLine(JsonSerializer.Serialize(obj.Data));
         }
 
         private static void OnAccountUpdate(DataEvent<BinanceFuturesStreamAccountUpdate> obj)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            Console.WriteLine(JsonSerializer.Serialize(obj));
         }
 
         private static void OnOrderUpdate(DataEvent<BinanceFuturesStreamOrderUpdate> obj)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(obj.Data));
+            Console.WriteLine(JsonSerializer.Serialize(obj.Data));
         }
 
         private static void OnListenKeyExpired(DataEvent<Binance.Net.Objects.Models.BinanceStreamEvent> obj)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(obj.Data));
+            Console.WriteLine(JsonSerializer.Serialize(obj.Data));
         }
 
         private static void CurrentDomainOnProcessExit(object sender, EventArgs eventArgs)

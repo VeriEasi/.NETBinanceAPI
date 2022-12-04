@@ -4,10 +4,10 @@ using Binance.Net.Objects;
 using Binance.Net.Objects.Models.Futures.Socket;
 using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Sockets;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
@@ -117,18 +117,18 @@ namespace BinanceAPI
             return (long)((time.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalSeconds);
         }
 
-        public async Task<JObject> GetAccountInfo()
+        public async Task<JsonObject> GetAccountInfo()
         {
             CancellationTokenSource CTS = new(5000);
             var result = await Client.UsdFuturesApi.Account.GetAccountInfoAsync(ct: CTS.Token);
-            return JObject.Parse(JsonConvert.SerializeObject(result));
+            return JsonNode.Parse(JsonSerializer.Serialize(result)).AsObject();
         }
 
-        public async Task<JObject> GetBalances()
+        public async Task<JsonObject> GetBalances()
         {
             CancellationTokenSource CTS = new(5000);
             var result = await Client.UsdFuturesApi.Account.GetBalancesAsync(ct: CTS.Token);
-            return JObject.Parse(JsonConvert.SerializeObject(result));
+            return JsonNode.Parse(JsonSerializer.Serialize(result)).AsObject();
         }
 
         public async Task<bool> SubscribeAccountUpdates(Action<DataEvent<BinanceFuturesStreamConfigUpdate>> OnLeverageUpdate,
@@ -177,21 +177,21 @@ namespace BinanceAPI
             else return true;
         }
 
-        public async Task<JObject> ChangeLeverage(string Symbol, int Leverage)
+        public async Task<JsonObject> ChangeLeverage(string Symbol, int Leverage)
         {
             CancellationTokenSource CTS = new(5000);
             var result = await Client.UsdFuturesApi.Account.ChangeInitialLeverageAsync(Symbol, Leverage, ct: CTS.Token);
-            return JObject.Parse(JsonConvert.SerializeObject(result));
+            return JsonNode.Parse(JsonSerializer.Serialize(result)).AsObject();
         }
 
-        public async Task<JObject> ChangeMarginType(string Symbol, FuturesMarginType Margin)
+        public async Task<JsonObject> ChangeMarginType(string Symbol, FuturesMarginType Margin)
         {
             CancellationTokenSource CTS = new(5000);
             var result = await Client.UsdFuturesApi.Account.ChangeMarginTypeAsync(Symbol, Margin, ct: CTS.Token);
-            return JObject.Parse(JsonConvert.SerializeObject(result));
+            return JsonNode.Parse(JsonSerializer.Serialize(result)).AsObject();
         }
 
-        public async Task<JObject> PlaceOrder(string Symbol, OrderSide Side, FuturesOrderType Type,
+        public async Task<JsonObject> PlaceOrder(string Symbol, OrderSide Side, FuturesOrderType Type,
             decimal? Quantity, decimal? Price = null, PositionSide? PositionSide = null,
             TimeInForce? TimeInForce = null, bool? ReduceOnly = null, string? NewClientOrderId = null,
             decimal? StopPrice = null, decimal? ActivationPrice = null, decimal? CallbackRate = null,
@@ -202,14 +202,14 @@ namespace BinanceAPI
             var result = await Client.UsdFuturesApi.Trading.PlaceOrderAsync(Symbol, Side, Type, Quantity, Price, PositionSide,
                 TimeInForce, ReduceOnly, NewClientOrderId, StopPrice, ActivationPrice, CallbackRate,
                 WorkingType, ClosePosition, OrderResponseType, PriceProtect, ReceiveWindow, CTS.Token);
-            return JObject.Parse(JsonConvert.SerializeObject(result));
+            return JsonNode.Parse(JsonSerializer.Serialize(result)).AsObject();
         }
 
-        public async Task<JObject> CancelOrder(string Symbol, long? OrderId = null, string? ClientOrderId = null)
+        public async Task<JsonObject> CancelOrder(string Symbol, long? OrderId = null, string? ClientOrderId = null)
         {
             CancellationTokenSource CTS = new(5000);
             var result = await Client.UsdFuturesApi.Trading.CancelOrderAsync(Symbol, OrderId, ClientOrderId, ct: CTS.Token);
-            return JObject.Parse(JsonConvert.SerializeObject(result));
+            return JsonNode.Parse(JsonSerializer.Serialize(result)).AsObject();
         }
     }
 }
