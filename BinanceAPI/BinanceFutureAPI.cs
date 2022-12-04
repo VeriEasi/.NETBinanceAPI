@@ -1,11 +1,14 @@
 ﻿using Binance.Net.Clients;
 using Binance.Net.Enums;
 using Binance.Net.Objects;
+using Binance.Net.Objects.Models.Futures;
 using Binance.Net.Objects.Models.Futures.Socket;
 using CryptoExchange.Net.Authentication;
+using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Sockets;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading;
@@ -129,6 +132,27 @@ namespace BinanceAPI
             CancellationTokenSource CTS = new(5000);
             var result = await Client.UsdFuturesApi.Account.GetBalancesAsync(ct: CTS.Token);
             return JsonNode.Parse(JsonSerializer.Serialize(result)).AsObject();
+        }
+
+        public async Task<JsonObject> GetOpenOrders(string? Symbol = null)
+        {
+            CancellationTokenSource CTS = new(5000);
+            var result = await Client.UsdFuturesApi.Trading.GetOpenOrdersAsync(Symbol, ct: CTS.Token);
+            return JsonNode.Parse(JsonSerializer.Serialize(result)).AsObject();
+        }
+
+        public async Task<JsonObject> GetOpenPositions(string? Symbol = null)
+        {
+            CancellationTokenSource CTS = new(5000);
+            List<JsonNode> Positions = new();
+            var result = await Client.UsdFuturesApi.Account.GetPositionInformationAsync(Symbol, ct:CTS.Token);
+            if (result.Success == true)
+                foreach(BinancePositionDetailsUsdt obj in result.Data)
+                    if (obj.Quantity != 0) Positions.Add(JsonNode.Parse(JsonSerializer.Serialize(obj)));
+            return new JsonObject
+            {
+                { "Data", JsonNode.Parse(JsonSerializer.Serialize(Positions.ToArray())) }
+            };
         }
 
         public async Task<bool> SubscribeAccountUpdates(Action<DataEvent<BinanceFuturesStreamConfigUpdate>> OnLeverageUpdate,

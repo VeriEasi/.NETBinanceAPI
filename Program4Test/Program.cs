@@ -38,6 +38,10 @@ namespace Program4Test
                 OnAccountUpdate, OnOrderUpdate, OnListenKeyExpired));
             Console.WriteLine("Subscribe: " + sub);
 
+            // Open Positions
+            JsonObject Pos = await Task.Run(() => bf.GetOpenPositions());
+            Console.WriteLine("Open Positions: " + JsonSerializer.Serialize(Pos));
+
             //await Task.Run(() => bf.PlaceOrder(
             //            Symbol: "NEARUSDT",
             //            Side: Binance.Net.Enums.OrderSide.Sell,
