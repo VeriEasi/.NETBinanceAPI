@@ -36,8 +36,8 @@ namespace BinanceAPI
         // Destructor
         ~BinanceSpotAPI()
         {
-            Client.Dispose();
-            SocketClient.Dispose();
+            Client?.Dispose();
+            SocketClient?.Dispose();
         }
 
         public async Task<bool> Connect()
@@ -139,7 +139,7 @@ namespace BinanceAPI
             return JsonNode.Parse(JsonSerializer.Serialize(result)).AsObject();
         }
 
-        public async Task<JsonObject> GetOpenOrders(string? Symbol = null)
+        public async Task<JsonObject> GetOpenOrders(string Symbol = null)
         {
             CancellationTokenSource CTS = new(5000);
             var result = await Client.SpotApi.Trading.GetOpenOrdersAsync(Symbol, ct: CTS.Token);
@@ -189,7 +189,7 @@ namespace BinanceAPI
         }
 
         public async Task<JsonObject> PlaceOrder(string Symbol, OrderSide Side, SpotOrderType Type,
-            decimal? Quantity, decimal? QuoteQuantity, string? NewClientOrderId = null, decimal? Price = null,
+            decimal? Quantity = null, decimal? QuoteQuantity = null, string NewClientOrderId = null, decimal? Price = null,
             TimeInForce? TimeInForce = null, decimal? StopPrice = null, decimal? IcebergQty = null, 
             OrderResponseType? OrderResponseType = null, int? TrailingData = null, int? ReceiveWindow = null)
         {
@@ -199,7 +199,7 @@ namespace BinanceAPI
             return JsonNode.Parse(JsonSerializer.Serialize(result)).AsObject();
         }
 
-        public async Task<JsonObject> CancelOrder(string Symbol, long? OrderId = null, string? ClientOrderId = null)
+        public async Task<JsonObject> CancelOrder(string Symbol, long? OrderId = null, string ClientOrderId = null)
         {
             CancellationTokenSource CTS = new(5000);
             var result = await Client.SpotApi.Trading.CancelOrderAsync(Symbol, OrderId, ClientOrderId, ct: CTS.Token);

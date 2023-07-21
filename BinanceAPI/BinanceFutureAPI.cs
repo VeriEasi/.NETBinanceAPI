@@ -36,8 +36,8 @@ namespace BinanceAPI
         // Destructor
         ~BinanceFutureAPI()
         {
-            Client.Dispose();
-            SocketClient.Dispose();
+            Client?.Dispose();
+            SocketClient?.Dispose();
         }
 
         public async Task<bool> Connect()
@@ -47,7 +47,7 @@ namespace BinanceAPI
                 ApiCredentials = new ApiCredentials(APIKey, APISecret),
                 UsdFuturesApiOptions = new BinanceApiClientOptions
                 {
-                    BaseAddress = BinanceApiAddresses.Default.UsdFuturesRestClientAddress,
+                    BaseAddress = BinanceApiAddresses.TestNet.UsdFuturesRestClientAddress,
                 }
             });
 
@@ -56,7 +56,7 @@ namespace BinanceAPI
                 ApiCredentials = new ApiCredentials(APIKey, APISecret),
                 UsdFuturesStreamsOptions = new BinanceApiClientOptions
                 {
-                    BaseAddress = BinanceApiAddresses.Default.UsdFuturesSocketClientAddress,
+                    BaseAddress = BinanceApiAddresses.TestNet.UsdFuturesSocketClientAddress,
                 }
             });
 
@@ -132,24 +132,30 @@ namespace BinanceAPI
             return JsonNode.Parse(JsonSerializer.Serialize(result)).AsObject();
         }
 
-        public async Task<JsonObject> GetOpenOrders(string? Symbol = null)
+        public async Task<JsonObject> GetOpenOrders(string Symbol = null)
         {
             CancellationTokenSource CTS = new(5000);
             var result = await Client.UsdFuturesApi.Trading.GetOpenOrdersAsync(Symbol, ct: CTS.Token);
             return JsonNode.Parse(JsonSerializer.Serialize(result)).AsObject();
         }
 
-        public async Task<JsonObject> GetOpenPositions(string? Symbol = null)
+        public async Task<JsonObject> GetOpenPositions(string Symbol = null)
         {
             CancellationTokenSource CTS = new(5000);
             List<JsonNode> Positions = new();
             var result = await Client.UsdFuturesApi.Account.GetPositionInformationAsync(Symbol, ct:CTS.Token);
-            if (result.Success == true)
-                foreach(BinancePositionDetailsUsdt obj in result.Data)
-                    if (obj.Quantity != 0) Positions.Add(JsonNode.Parse(JsonSerializer.Serialize(obj)));
-            return new JsonObject
+            if (result.Success != true) return new JsonObject()
             {
-                { "Data", JsonNode.Parse(JsonSerializer.Serialize(Positions.ToArray())) }
+                { "Success", false },
+                { "Error", result.Error.ToString() }
+            };
+            foreach(BinancePositionDetailsUsdt obj in result.Data)
+                if (obj.Quantity != 0) Positions.Add(JsonNode.Parse(JsonSerializer.Serialize(obj)));
+            return new JsonObject()
+            {
+                { "Data", JsonNode.Parse(JsonSerializer.Serialize(Positions.ToArray())) },
+                { "Success", true },
+                { "Error", "" }
             };
         }
 
@@ -214,8 +220,8 @@ namespace BinanceAPI
         }
 
         public async Task<JsonObject> PlaceOrder(string Symbol, OrderSide Side, FuturesOrderType Type,
-            decimal? Quantity, decimal? Price = null, PositionSide? PositionSide = null,
-            TimeInForce? TimeInForce = null, bool? ReduceOnly = null, string? NewClientOrderId = null,
+            decimal? Quantity = null, decimal? Price = null, PositionSide? PositionSide = null,
+            TimeInForce? TimeInForce = null, bool? ReduceOnly = null, string NewClientOrderId = null,
             decimal? StopPrice = null, decimal? ActivationPrice = null, decimal? CallbackRate = null,
             WorkingType? WorkingType = null, bool? ClosePosition = null, OrderResponseType? OrderResponseType = null,
             bool? PriceProtect = null, int? ReceiveWindow = null)
@@ -227,7 +233,7 @@ namespace BinanceAPI
             return JsonNode.Parse(JsonSerializer.Serialize(result)).AsObject();
         }
 
-        public async Task<JsonObject> CancelOrder(string Symbol, long? OrderId = null, string? ClientOrderId = null)
+        public async Task<JsonObject> CancelOrder(string Symbol, long? OrderId = null, string ClientOrderId = null)
         {
             CancellationTokenSource CTS = new(5000);
             var result = await Client.UsdFuturesApi.Trading.CancelOrderAsync(Symbol, OrderId, ClientOrderId, ct: CTS.Token);
